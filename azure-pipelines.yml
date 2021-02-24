@@ -1,0 +1,66 @@
+name: '​​​$(MajorVersion).$(MinorVersion).$(Date:yyyyMMdd)$(Rev:.r)'
+pool:
+  name: Azure Pipelines
+  vmImage: 'vs2017-win2016'
+  demands:
+  - msbuild
+  - visualstudio
+  - vstest
+
+variables:
+  BuildConfiguration: 'Release'
+  BuildPlatform: 'Any CPU'
+  MajorVersion: '5'
+  MinorVersion: '0'
+  MSBUILDDISABLENODEREUSE: '1'
+
+steps:
+- task: UseDotNet@2
+  displayName: 'Use .Net Core sdk 5.0.x'
+  inputs:
+    version: 5.0.x
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet restore'
+  inputs:
+    command: restore
+    projects: '**/*.csproj'
+    vstsFeed: '6b1c52ab-2640-4c74-8aa1-6e4fb8503fbf'
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet build'
+  inputs:
+    projects: '**/*.csproj'
+    arguments: '--configuration $(BuildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet test'
+  inputs:
+    command: test
+    projects: '**/*[Tt]ests/*.csproj'
+    arguments: '--configuration $(BuildConfiguration)'
+  enabled: 'false'
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet pack'
+  inputs:
+    command: pack
+    includesymbols: true
+    versioningScheme: byBuildNumber
+
+- task: PublishSymbols@2
+  displayName: 'Publish symbols path'
+  inputs:
+    SymbolServerType: TeamServices
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: Build Output Files'
+  inputs:
+    ArtifactName: 'Build Output Files'
+
+- task: NuGetCommand@2
+  displayName: 'NuGet push'
+  inputs:
+    command: push
+    publishVstsFeed: '6b1c52ab-2640-4c74-8aa1-6e4fb8503fbf'
+    allowPackageConflicts: true

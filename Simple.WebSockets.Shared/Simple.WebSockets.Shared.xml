@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Simple.WebSockets.Shared</name>
+    </assembly>
+    <members>
+        <member name="T:Simple.WebSockets.Shared.Helpers.Utilities">
+            <summary>
+            Conversion metrics utilities
+            </summary>
+        </member>
+        <member name="M:Simple.WebSockets.Shared.Helpers.Utilities.GenerateDataSize(System.Double)">
+            <summary>
+            Generate data size string. Will return a pretty string of bytes, KiB, MiB, GiB, TiB based on the given bytes.
+            </summary>
+            <param name="b">Data size in bytes</param>
+            <returns>String with data size representation</returns>
+        </member>
+        <member name="M:Simple.WebSockets.Shared.Helpers.Utilities.GenerateTimePeriod(System.Double)">
+            <summary>
+            Generate time period string. Will return a pretty string of ns, mcs, ms, s, m, h based on the given nanoseconds.
+            </summary>
+            <param name="ms">Milliseconds</param>
+            <returns>String with time period representation</returns>
+        </member>
+        <member name="M:Simple.WebSockets.Shared.Helpers.Utilities.GenerateIdentifier(System.Int32)">
+            <summary>
+            Generates a unique identifier using a customised "ShortGuid"
+            </summary>
+            <returns>Generated Identifier</returns>
+        </member>
+        <member name="M:Simple.WebSockets.Shared.Helpers.Utilities.ToShortGuid(System.Guid)">
+            <summary>
+            Converts from a <see cref="T:System.Guid"/> to a ShortGuid
+            </summary>
+            <param name="guid">Guid Value</param>
+            <returns>Short Guid Value</returns>
+        </member>
+    </members>
+</doc>

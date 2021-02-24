@@ -1,0 +1,215 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Simple.WebSockets.Server</name>
+    </assembly>
+    <members>
+        <member name="T:Simple.WebSockets.Server.Extensions.ApplicationBuilderExtensions">
+            <summary>
+            Application Builder Extensions
+            </summary>
+        </member>
+        <member name="M:Simple.WebSockets.Server.Extensions.ApplicationBuilderExtensions.UseWebSocketMiddleware(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Adds the WebSocket Middleware to the Pipeline
+            </summary>
+            <param name="app">Application Builder</param>
+            <returns><see cref="T:Microsoft.AspNetCore.Builder.IApplicationBuilder"/></returns>
+        </member>
+        <member name="T:Simple.WebSockets.Server.Extensions.ServiceCollectionExtensions">
+            <summary>
+            Service Collection Extensions
+            </summary>
+        </member>
+        <member name="M:Simple.WebSockets.Server.Extensions.ServiceCollectionExtensions.AddWebSocketManager``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Adds the WebSocket Manager to Dependency Injection
+            </summary>
+            <param name="services">Service Collection</param>
+            <returns></returns>
+        </member>
+        <member name="T:Simple.WebSockets.Server.Interfaces.INotificationService">
+            <summary>
+            Notification Service
+            </summary>
+        </member>
+        <member name="M:Simple.WebSockets.Server.Interfaces.INotificationService.OnClientConnected(Simple.WebSockets.Server.Internal.SocketConnection)">
+            <summary>
+            Notification for when a Client Connects
+            </summary>
+        </member>
+        <member name="M:Simple.WebSockets.Server.Interfaces.INotificationService.OnClientDisconnected(Simple.WebSockets.Server.Internal.SocketConnection)">
+            <summary>
+            Notification for when a Client Disconnects
+            </summary>
+        </member>
+        <member name="M:Simple.WebSockets.Server.Interfaces.INotificationService.OnMessageReceived(System.String)">
+            <summary>
+            Notification for when a Message is Received
+            </summary>
+        </member>
+        <member name="T:Simple.WebSockets.Server.Interfaces.IWebSocketServer">
+            <summary>
+            WebSocket Server
+            </summary>
+        </member>
+        <member name="E:Simple.WebSockets.Server.Interfaces.IWebSocketServer.OnClientConnected">
+            <summary>
+            Event: Client Connected
+            </summary>
+        </member>
+        <member name="E:Simple.WebSockets.Server.Interfaces.IWebSocketServer.OnClientDisconnected">
+            <summary>
+            Event: Client Disconnected
+            </summary>
+        </member>
+        <member name="E:Simple.WebSockets.Server.Interfaces.IWebSocketServer.OnMessageReceived">
+            <summary>
+            Event: Message Received
+            </summary>
+        </member>
+        <member name="P:Simple.WebSockets.Server.Interfaces.IWebSocketServer.ActiveConnections">
+            <summary>
+            Gets a count of active connections
+            </summary>
+        </member>
+        <member name="M:Simple.WebSockets.Server.Interfaces.IWebSocketServer.GetSocketById(System.String)">
+            <summary>
+            Gets a Socket by Id
+            </summary>
+            <param name="id">Socket Id</param>
+            <returns><see cref="T:Simple.WebSockets.Server.Internal.SocketConnection"/></returns>
+        </member>
+        <member name="M:Simple.WebSockets.Server.Interfaces.IWebSocketServer.GetAll">
+            <summary>
+            Returns a collection of all the connected sockets
+            </summary>
+            <returns><see cref="T:System.Collections.Generic.IList`1"/></returns>
+        </member>
+        <member name="M:Simple.WebSockets.Server.Interfaces.IWebSocketServer.GetById(System.String)">
+            <summary>
+            Gets a socket connection from the internal collection
+            </summary>
+            <param name="socketId">Socket Identifier</param>
+            <returns><see cref="T:Simple.WebSockets.Server.Internal.SocketConnection"/></returns>
+        </member>
+        <member name="M:Simple.WebSockets.Server.Interfaces.IWebSocketServer.AddSocketAsync(System.Net.WebSockets.WebSocket,System.String)">
+            <summary>
+            Adds a Socket to the internal collection
+            </summary>
+            <param name="socket">WebSocket</param>
+            <param name="clientName">Client Name</param>
+        </member>
+        <member name="M:Simple.WebSockets.Server.Interfaces.IWebSocketServer.RemoveSocketAsync(System.String)">
+            <summary>
+            Removes a Socket from the internal collection
+            </summary>
+            <param name="id">Socket Id</param>
+            <returns></returns>
+        </member>
+        <member name="M:Simple.WebSockets.Server.Interfaces.IWebSocketServer.MessageReceivedAsync(System.String)">
+            <summary>
+            Message Received
+            </summary>
+            <param name="message">Message</param>
+            <returns><see cref="T:System.Threading.Tasks.Task"/></returns>
+        </member>
+        <member name="T:Simple.WebSockets.Server.Internal.SocketConnection">
+            <summary>
+            Web Socket Connection
+            </summary>
+        </member>
+        <member name="P:Simple.WebSockets.Server.Internal.SocketConnection.Id">
+            <summary>
+            Gets or sets the Socket Connection Id
+            </summary>
+        </member>
+        <member name="P:Simple.WebSockets.Server.Internal.SocketConnection.ClientName">
+            <summary>
+            Gets or sets the Client Name
+            </summary>
+        </member>
+        <member name="M:Simple.WebSockets.Server.Internal.SocketConnection.#ctor(System.Net.WebSockets.WebSocket,System.String)">
+            <summary>
+            Initialises a new instance of the <see cref="T:Simple.WebSockets.Server.Internal.SocketConnection"/> class
+            </summary>
+            <param name="socket">Web Socket</param>
+            <param name="clientName">Client Name</param>
+        </member>
+        <member name="M:Simple.WebSockets.Server.Internal.SocketConnection.SendAsync(System.Net.WebSockets.WebSocket,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="socket"></param>
+            <param name="data"></param>
+            <returns><see cref="T:System.Threading.Tasks.Task"/></returns>
+        </member>
+        <member name="M:Simple.WebSockets.Server.Internal.SocketConnection.CloseAsync(System.Net.WebSockets.WebSocketCloseStatus,System.String)">
+            <summary>
+            Close Socket
+            </summary>
+            <param name="normalClosure">Closure Reason</param>
+            <param name="closeMessage">Close Message</param>
+            <returns><see cref="T:System.Threading.Tasks.Task"/></returns>
+        </member>
+        <member name="T:Simple.WebSockets.Server.Internal.WebSocketMiddleware">
+            <summary>
+            Web Socket Middleware
+            </summary>
+        </member>
+        <member name="M:Simple.WebSockets.Server.Internal.WebSocketMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate)">
+            <summary>
+            Initialises a new instance of the <see cref="T:Simple.WebSockets.Server.Internal.WebSocketMiddleware"/> class
+            </summary>
+            <param name="next">Request Delegate</param>
+        </member>
+        <member name="M:Simple.WebSockets.Server.Internal.WebSocketMiddleware.Invoke(Microsoft.AspNetCore.Http.HttpContext,Simple.WebSockets.Server.Interfaces.IWebSocketServer)">
+            <summary>
+            Main Invoke Method
+            </summary>
+            <param name="context">Http Context</param>
+            <param name="webSocketServer">WebSocket Server</param>
+            <returns><see cref="T:System.Threading.Tasks.Task"/></returns>
+        </member>
+        <member name="T:Simple.WebSockets.Server.Internal.WebSocketServer">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Simple.WebSockets.Server.Internal.WebSocketServer.#ctor(Microsoft.Extensions.DependencyInjection.IServiceScopeFactory,Simple.WebSockets.Server.Interfaces.INotificationService)">
+            <summary>
+            Initialises a new instance of the <see cref="T:Simple.WebSockets.Server.Internal.WebSocketServer"/> class
+            </summary>
+        </member>
+        <member name="P:Simple.WebSockets.Server.Internal.WebSocketServer.ActiveConnections">
+            <inheritdoc />
+        </member>
+        <member name="E:Simple.WebSockets.Server.Internal.WebSocketServer.OnClientConnected">
+            <inheritdoc />
+        </member>
+        <member name="E:Simple.WebSockets.Server.Internal.WebSocketServer.OnClientDisconnected">
+            <inheritdoc />
+        </member>
+        <member name="E:Simple.WebSockets.Server.Internal.WebSocketServer.OnMessageReceived">
+            <inheritdoc />
+        </member>
+        <member name="M:Simple.WebSockets.Server.Internal.WebSocketServer.GetSocketById(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Simple.WebSockets.Server.Internal.WebSocketServer.GetAll">
+            <inheritdoc />
+        </member>
+        <member name="M:Simple.WebSockets.Server.Internal.WebSocketServer.GetById(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Simple.WebSockets.Server.Internal.WebSocketServer.AddSocketAsync(System.Net.WebSockets.WebSocket,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Simple.WebSockets.Server.Internal.WebSocketServer.RemoveSocketAsync(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Simple.WebSockets.Server.Internal.WebSocketServer.MessageReceivedAsync(System.String)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>
