@@ -57,10 +57,3 @@ steps:
   displayName: 'Publish Artifact: Build Output Files'
   inputs:
     ArtifactName: 'Build Output Files'
-
-- task: NuGetCommand@2
-  displayName: 'NuGet push'
-  inputs:
-    command: push
-    publishVstsFeed: '6b1c52ab-2640-4c74-8aa1-6e4fb8503fbf'
-    allowPackageConflicts: true
